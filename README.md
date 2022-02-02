@@ -28,3 +28,7 @@ This section is dedicated to find out anomalies of products for reference:
 - Price Discount example: `https://us.princesspolly.com/products/the-soho-heels-beige`
 - There is a occasional banner that pops up whose selector is: `close-button cw-close`
 - The price for all the sizes must be same because there is **no network activity** when different sizes are selected
+- In all product list, different color variants of the same product is served. So it's not reliable to get the original
+  product that way.
+  - possible approaches:
+    - if product `color name` exists in product name then subtract the color to get the base products
