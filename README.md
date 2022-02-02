@@ -19,3 +19,10 @@ Example product link: `https://us.princesspolly.com/products/huxley-set?nosto=fr
 - The following information
   - Product name
   - Product description
+
+## Research of the site
+
+This section is dedicated to find out anomalies of products for reference:
+
+- Sold out example: `https://us.princesspolly.com/products/charvi-mini-dress-forest-burgundy?variant=39519437619284`
+- Price Discount example: `https://us.princesspolly.com/products/the-soho-heels-beige`
