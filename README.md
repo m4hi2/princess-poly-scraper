@@ -32,3 +32,4 @@ This section is dedicated to find out anomalies of products for reference:
   product that way.
   - possible approaches:
     - if product `color name` exists in product name then subtract the color to get the base products
+    - if product name doesn't contain `color name` then the product name will be the base product
