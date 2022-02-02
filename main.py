@@ -1,5 +1,3 @@
-from locale import currency
-from traceback import print_tb
 from playwright.sync_api import sync_playwright
 
 p = sync_playwright().start()
