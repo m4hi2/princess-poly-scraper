@@ -27,3 +27,4 @@ This section is dedicated to find out anomalies of products for reference:
 - Sold out example: `https://us.princesspolly.com/products/charvi-mini-dress-forest-burgundy?variant=39519437619284`
 - Price Discount example: `https://us.princesspolly.com/products/the-soho-heels-beige`
 - There is a occasional banner that pops up whose selector is: `close-button cw-close`
+- The price for all the sizes must be same because there is **no network activity** when different sizes are selected
