@@ -9,5 +9,11 @@ page = browser.new_page()
 page.goto("https://us.princesspolly.com/products/the-soho-heels-beige?currency=BDT")
 color = page.query_selector(".product__active-color-value").inner_text().lower()
 product_name = page.query_selector(".product__title").inner_text().replace(color, "").strip().lower()
+variants_options_elements = page.query_selector_all("#SingleOptionSelector-0>option")
+
+variants_data = {v.get_attribute("value"): v.get_attribute("data-stock") for v in variants_options_elements if v.get_attribute("data-stock")}
+
+
 print(color)
 print(product_name)
+print(variants_data)
