@@ -1,9 +1,9 @@
 import re
 import requests
 
-main_sitemap = "https://us.princesspolly.com/sitemap.xml"
 
 def main():
+    main_sitemap = "https://us.princesspolly.com/sitemap.xml"
     sitemap_response = requests.get(main_sitemap)
     product_sitemap_links = find_product_links(sitemap_response.text)
     for product_sitemap_link in product_sitemap_links:
