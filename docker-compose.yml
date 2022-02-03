@@ -1,0 +1,18 @@
+version: '3.9'
+services:
+  rabbitmq:
+    # Management image because development environment
+    # Using slightly older rabbitmq image becasue persmission issue
+    # ref: https://github.com/mpast/mobileAudit/issues/44#issuecomment-932316685
+    image: rabbitmq:3.8-management
+    container_name: rabbitmq
+    environment:
+      - PUID=1000
+      - PGID=1001
+      - TZ=Asia/Dhaka
+    volumes:
+      - ./.docker/rabbitmq/data/:/var/lib/rabbitmq/
+      - ./.docker/rabbitmq/logs/:/var/log/rabbitmq/
+    ports:
+      - 5672:5672
+      - 15672:15672
