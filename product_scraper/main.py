@@ -19,6 +19,7 @@ with sync_playwright() as p:
     images = page.query_selector_all(".product__zoom")
 
     image_links = set(["https:" + i.get_attribute("data-product-detail-zoom") for i in images])
+    product_description = page.query_selector(".product-details__content-inner").inner_text().strip()
 
 
     print(color)
@@ -27,3 +28,4 @@ with sync_playwright() as p:
     print(current_price)
     print(original_price)
     print(image_links)
+    print(product_description)
