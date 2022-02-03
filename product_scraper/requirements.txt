@@ -1,5 +1,7 @@
 greenlet==1.1.2
+pika==1.2.0
 playwright==1.18.1
 pyee==9.0.3
-typing_extensions==4.0.1
+python-dotenv==0.19.2
+typing-extensions==4.0.1
 websockets==10.1
