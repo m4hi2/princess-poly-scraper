@@ -22,6 +22,7 @@ def find_product_links(xml_file: str) -> list:
     """
     # Didn't want to use BeautifulSoup, so I just used regex to find the links
     links = re.findall('<loc>(.*?)</loc>', xml_file)
+    # Using list comprehension to filter out the links that aren't product links
     return [link for link in links if "products" in link]
 
 if __name__ == "__main__":
