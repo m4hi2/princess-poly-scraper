@@ -5,13 +5,19 @@ from products import Product
 
 consume_queue = "product_links"
 publish_queue = "products"
-secondary_publish = "prod_name_for_debug"
 
 bus.declare([
     consume_queue,
     publish_queue,
 ])
 
+product_name_selector = ".product__title"
+color_selector = ".product__active-color-value"
+size_selector = ".product__select--size>option"
+current_price_selector = "span[data-product-price]"
+original_price_selector = "s[data-compare-price]"
+images_selector = ".product__zoom"
+prodcut_description_selector = ".product-details__content-inner"
 
 p = sync_playwright().start()
 browser = p.chromium.launch()
@@ -20,22 +26,22 @@ def scrape(browser, link: str) -> None:
     with browser.new_page() as page:
 
         page.goto(link)
-        color = page.query_selector(".product__active-color-value").inner_text().lower()
-        product_name = page.query_selector(".product__title").inner_text().lower().replace(color, "").strip()
-        variants_options_elements = page.query_selector_all(".product__select--size>option")
-        current_price =  page.query_selector("span[data-product-price]").inner_text().replace("$", "")
-        original_price = page.query_selector("s[data-compare-price]").inner_text().replace("$", "")
+        color = page.query_selector(color_selector).inner_text().lower()
+        product_name = page.query_selector(product_name_selector).inner_text().lower().replace(color, "").strip()
+        product_description = page.query_selector(prodcut_description_selector).inner_text().strip()
+        current_price =  page.query_selector(current_price_selector).inner_text().replace("$", "")
+        original_price = page.query_selector(original_price_selector).inner_text().replace("$", "")
 
         if original_price == "":
             original_price = current_price
 
-        variants_data = {v.get_attribute("value"): v.get_attribute("data-stock") for v in variants_options_elements if v.get_attribute("data-stock")}
-        images = page.query_selector_all(".product__zoom")
+        size_options_elements = page.query_selector_all(size_selector)
+        size_stock_data = {s.get_attribute("value"): s.get_attribute("data-stock") for s in size_options_elements if s.get_attribute("data-stock")}
 
+        images = page.query_selector_all(images_selector)
         image_links = set(["https:" + i.get_attribute("data-product-detail-zoom") for i in images])
-        product_description = page.query_selector(".product-details__content-inner").inner_text().strip()
         
-        for size, stock in variants_data.items():
+        for size, stock in size_stock_data.items():
             product = Product(product_name, current_price, original_price, size, color, image_links, product_description, stock)
             bus.publish(publish_queue, str(product), pickleit=False)
 
