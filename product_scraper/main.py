@@ -3,6 +3,9 @@ from playwright.sync_api import sync_playwright
 import bus
 from products import Product
 
+###################################################
+#                  Queue settings                 #
+###################################################
 consume_queue = "product_links"
 publish_queue = "products"
 
@@ -11,6 +14,9 @@ bus.declare([
     publish_queue,
 ])
 
+###################################################
+# Product page selectors for required information #
+###################################################
 product_name_selector = ".product__title"
 color_selector = ".product__active-color-value"
 size_selector = ".product__select--size>option"
@@ -19,6 +25,9 @@ original_price_selector = "s[data-compare-price]"
 images_selector = ".product__zoom"
 prodcut_description_selector = ".product-details__content-inner"
 
+##################################################
+# Starting Playwright instance                   #
+##################################################
 p = sync_playwright().start()
 browser = p.chromium.launch()
 
@@ -54,5 +63,8 @@ def callback(ch, method, properties, message):
         print(e)
         print(message.link)
 
+##################################################
+#  Start Processing Data from the queue          #
+##################################################
 bus.consume(consume_queue, callback)
 bus.loop()
