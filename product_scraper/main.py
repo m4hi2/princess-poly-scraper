@@ -23,7 +23,7 @@ def scrape(browser, link):
         page.goto(link)
         color = page.query_selector(".product__active-color-value").inner_text().lower()
         product_name = page.query_selector(".product__title").inner_text().lower().replace(color, "").strip()
-        variants_options_elements = page.query_selector_all("#SingleOptionSelector-0>option")
+        variants_options_elements = page.query_selector_all(".product__select--size>option")
         current_price =  page.query_selector("span[data-product-price]").inner_text().replace("$", "")
         original_price = page.query_selector("s[data-compare-price]").inner_text().replace("$", "")
 
