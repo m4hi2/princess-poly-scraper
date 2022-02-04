@@ -10,14 +10,13 @@ secondary_publish = "prod_name_for_debug"
 bus.declare([
     consume_queue,
     publish_queue,
-    secondary_publish
 ])
 
 
 p = sync_playwright().start()
 browser = p.chromium.launch()
 
-def scrape(browser, link):
+def scrape(browser, link: str) -> None:
     with browser.new_page() as page:
 
         page.goto(link)
@@ -35,15 +34,9 @@ def scrape(browser, link):
 
         image_links = set(["https:" + i.get_attribute("data-product-detail-zoom") for i in images])
         product_description = page.query_selector(".product-details__content-inner").inner_text().strip()
-        # print(product_name)
-        # print(variants_data)
         
-        product = Product(product_name, current_price, original_price, "", color, image_links, product_description, 0)
-        bus.publish(secondary_publish, str(product), pickleit=False)
         for size, stock in variants_data.items():
-            # print(size, stock)
             product = Product(product_name, current_price, original_price, size, color, image_links, product_description, stock)
-            # print(product)
             bus.publish(publish_queue, str(product), pickleit=False)
 
 
