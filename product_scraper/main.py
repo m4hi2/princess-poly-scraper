@@ -32,6 +32,13 @@ p = sync_playwright().start()
 browser = p.chromium.launch()
 
 def scrape(browser, link: str) -> None:
+    """Given a link and browser instance scrapes product data and publishes
+    serialized product objects to the queue
+
+    Args:
+        browser (Browser): Playwright Browser Instance
+        link (str): Link of product
+    """
     with browser.new_page() as page:
 
         page.goto(link)
@@ -41,6 +48,8 @@ def scrape(browser, link: str) -> None:
         current_price =  page.query_selector(current_price_selector).inner_text().replace("$", "")
         original_price = page.query_selector(original_price_selector).inner_text().replace("$", "")
 
+        # Not rechecking for price in product sizes because price is fully hydrated and
+        # has no fetch action when different sizes are selected.
         if original_price == "":
             original_price = current_price
 
