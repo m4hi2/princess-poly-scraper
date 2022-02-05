@@ -73,7 +73,7 @@ def callback(ch, method, properties, task):
     except Exception as e:
         print(e)
         print(task.link)
-        task.error.append(str(e))
+        task.errors.append(str(e))
         task.failed_times += 1
         bus.publish(task_queue, task)
 
