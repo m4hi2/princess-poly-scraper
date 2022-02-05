@@ -46,7 +46,9 @@ def scrape(browser, link: str) -> None:
         product_name = page.query_selector(product_name_selector).inner_text().lower().replace(color, "").strip()
         product_description = page.query_selector(prodcut_description_selector).inner_text().strip()
         current_price =  page.query_selector(current_price_selector).inner_text().replace("$", "")
+        current_price = float(current_price)
         original_price = page.query_selector(original_price_selector).inner_text().replace("$", "")
+        original_price = float(original_price)
 
         # Not rechecking for price in product sizes because price is fully hydrated and
         # has no fetch action when different sizes are selected.
