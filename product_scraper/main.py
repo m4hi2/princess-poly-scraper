@@ -66,12 +66,15 @@ def scrape(browser, link: str) -> None:
             bus.publish(product_queue, str(product), pickleit=False)
 
 
-def callback(ch, method, properties, message):
+def callback(ch, method, properties, task):
     try:
-        scrape(browser, message.link)
-        print(message.link)
+        scrape(browser, task.link)
+        print(task.link)
     except Exception as e:
         print(e)
+        print(task.link)
+        task.error.append(str(e))
+        task.failed_times += 1
         bus.publish(task_queue, task)
 
 ##################################################
