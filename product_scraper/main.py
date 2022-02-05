@@ -83,7 +83,8 @@ def scrape(browser, link: str) -> None:
             original_price = current_price
 
         size_options_elements = page.query_selector_all(size_selector)
-        size_stock_data = {s.get_attribute("value"): s.get_attribute("data-stock") for s in size_options_elements if s.get_attribute("data-stock")}
+        size_stock_data = {s.get_attribute("value"): s.get_attribute("data-stock") \
+                            for s in size_options_elements if s.get_attribute("data-stock")}
 
         images = page.query_selector_all(images_selector)
         image_links = set(["https:" + i.get_attribute("data-product-detail-zoom") for i in images])
