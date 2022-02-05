@@ -4,17 +4,6 @@ import bus
 from products import Product
 
 ###################################################
-#                  Queue settings                 #
-###################################################
-task_queue = "product_links"
-product_queue = "products"
-
-bus.declare([
-    task_queue,
-    product_queue,
-])
-
-###################################################
 # Product page selectors for required information #
 ###################################################
 product_name_selector = ".product__title"
@@ -25,11 +14,49 @@ original_price_selector = "s[data-compare-price]"
 images_selector = ".product__zoom"
 prodcut_description_selector = ".product-details__content-inner"
 
-##################################################
-# Starting Playwright instance                   #
-##################################################
-p = sync_playwright().start()
-browser = p.chromium.launch()
+
+###################################################
+#                  Queue settings                 #
+###################################################
+task_queue = "product_links"
+product_queue = "products"
+
+def  main():
+
+    bus.declare([
+        task_queue,
+        product_queue,
+    ])
+
+    ##################################################
+    # Starting Playwright instance                   #
+    ##################################################
+    p = sync_playwright().start()
+    browser = p.chromium.launch()
+
+    #  The call back func object is defined here because
+    # it has to be in the same scope as the browser instance
+    def callback(ch, method, properties, task):
+        try:
+            scrape(browser, task.link)
+            print(task.link)
+        except Exception as e:
+            print(e)
+            print(task.link)
+            task.errors.append(str(e))
+            task.failed_times += 1
+            bus.publish(task_queue, task)
+
+    ##################################################
+    #  Start Processing Data from the queue          #
+    ##################################################
+    # We can't pass the browser object here because,
+    # If we do that then it'll be call. But the call
+    # is only meant to be triggered on messages from
+    # the Queue.
+    bus.consume(task_queue, callback)
+    bus.loop()
+
 
 def scrape(browser, link: str) -> None:
     """Given a link and browser instance scrapes product data and publishes
@@ -66,19 +93,5 @@ def scrape(browser, link: str) -> None:
             bus.publish(product_queue, str(product), pickleit=False)
 
 
-def callback(ch, method, properties, task):
-    try:
-        scrape(browser, task.link)
-        print(task.link)
-    except Exception as e:
-        print(e)
-        print(task.link)
-        task.errors.append(str(e))
-        task.failed_times += 1
-        bus.publish(task_queue, task)
-
-##################################################
-#  Start Processing Data from the queue          #
-##################################################
-bus.consume(task_queue, callback)
-bus.loop()
+if __name__ == "__main__":
+    main()
