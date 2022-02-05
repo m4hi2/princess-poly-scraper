@@ -6,12 +6,12 @@ from products import Product
 ###################################################
 #                  Queue settings                 #
 ###################################################
-consume_queue = "product_links"
-publish_queue = "products"
+task_queue = "product_links"
+product_queue = "products"
 
 bus.declare([
-    consume_queue,
-    publish_queue,
+    task_queue,
+    product_queue,
 ])
 
 ###################################################
@@ -63,7 +63,7 @@ def scrape(browser, link: str) -> None:
         
         for size, stock in size_stock_data.items():
             product = Product(product_name, current_price, original_price, size, color, image_links, product_description, stock)
-            bus.publish(publish_queue, str(product), pickleit=False)
+            bus.publish(product_queue, str(product), pickleit=False)
 
 
 def callback(ch, method, properties, message):
@@ -72,10 +72,10 @@ def callback(ch, method, properties, message):
         print(message.link)
     except Exception as e:
         print(e)
-        print(message.link)
+        bus.publish(task_queue, task)
 
 ##################################################
 #  Start Processing Data from the queue          #
 ##################################################
-bus.consume(consume_queue, callback)
+bus.consume(task_queue, callback)
 bus.loop()
