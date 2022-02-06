@@ -1,25 +1,13 @@
 import os
 import pickle
 from typing import ByteString, Callable
+import time
 
 import pika
 from dotenv import load_dotenv
 from pika import channel
 
 load_dotenv()
-
-_host = os.getenv("RABBITHOST", "localhost")
-# storage_dir = os.getenv(
-#     "STORAGEDIR", ".storage/")
-# os.makedirs(storage_dir, exist_ok=True)
-
-_connection = pika.BlockingConnection(
-    pika.ConnectionParameters(host=_host)
-)
-
-channel = _connection.channel()
-
-channel.basic_qos(prefetch_count=1)
 
 
 def declare(queues: list):
@@ -76,3 +64,21 @@ def consume(queue: str, callback: Callable[[str, str, str, ByteString], None], p
 
 def loop():
     channel.start_consuming()
+
+def connect(host):
+    try:
+        print("Waiting for rabbitmq")
+        return pika.BlockingConnection(
+            pika.ConnectionParameters(host=host)
+        )
+    except:
+        time.sleep(5)
+
+if __name__ != "__main__":
+    host = os.getenv("RABBITHOST", "localhost")
+    connection = connect(host)
+    while not connection:
+        connection = connect(host)
+
+    channel = connection.channel()
+    channel.basic_qos(prefetch_count=1)
