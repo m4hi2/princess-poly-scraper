@@ -90,7 +90,7 @@ def scrape(browser, link: str) -> None:
         image_links = set(["https:" + i.get_attribute("data-product-detail-zoom") for i in images])
         
         for size, stock in size_stock_data.items():
-            product = Product(product_name, current_price, original_price, size, color, image_links, product_description, stock)
+            product = Product(product_name, current_price, original_price, size, color, image_links, product_description, int(stock))
             bus.publish(product_queue, str(product), pickleit=False)
 
 

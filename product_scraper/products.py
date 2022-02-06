@@ -10,4 +10,4 @@ class Product:
     color: str
     image_links: list
     description: str
-    stock: str
+    stock: int
