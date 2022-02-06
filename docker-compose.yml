@@ -31,3 +31,11 @@ services:
       - ./.docker/postgres-data:/var/lib/postgresql/data
       # copy the sql script to create tables
       - ./product_aggregator/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+  sitemap_scraper:
+    build: ./sitemap_scraper/
+    depends_on:
+      - rabbitmq
+    links:
+      - "rabbitmq:rabbitmq"
+    environment:
+      - RABBITHOST=rabbitmq
