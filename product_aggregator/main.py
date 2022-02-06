@@ -20,7 +20,7 @@ def main():
             product.full_price,
             product.size,
             product.color,
-            list(product.image_links),
+            product.image_links,
             product.stock,
             product.description
         )

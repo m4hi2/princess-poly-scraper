@@ -89,6 +89,7 @@ def scrape(browser, link: str) -> None:
 
         images = page.query_selector_all(images_selector)
         image_links = set(["https:" + i.get_attribute("data-product-detail-zoom") for i in images])
+        image_links = list(image_links)
         
         for size, stock in size_stock_data.items():
             product = Product(product_name, current_price, original_price, size, color, image_links, product_description, int(stock))
