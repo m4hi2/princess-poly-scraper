@@ -91,7 +91,7 @@ def scrape(browser, link: str) -> None:
         
         for size, stock in size_stock_data.items():
             product = Product(product_name, current_price, original_price, size, color, image_links, product_description, int(stock))
-            bus.publish(product_queue, str(product), pickleit=False)
+            bus.publish(product_queue, product)
 
 
 if __name__ == "__main__":
