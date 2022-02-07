@@ -39,6 +39,9 @@ services:
       - "rabbitmq:rabbitmq"
     environment:
       - RABBITHOST=rabbitmq
+    volumes:
+      - ./bus:/src/bus
+      - ./tasks.py:/src/tasks.py
   product_scraper:
     build: ./product_scraper/
     depends_on:
@@ -47,6 +50,10 @@ services:
       - "rabbitmq:rabbitmq"
     environment:
       - RABBITHOST=rabbitmq
+    volumes:
+      - ./bus:/src/bus
+      - ./tasks.py:/src/tasks.py
+      - ./products.py:/src/products.py
   product_aggregator:
     build: ./product_aggregator/
     depends_on:
@@ -58,4 +65,7 @@ services:
     environment:
       - RABBITHOST=rabbitmq
       - PGHOST=postgres
+    volumes:
+      - ./bus:/src/bus
+      - ./products.py:/src/products.py
     
