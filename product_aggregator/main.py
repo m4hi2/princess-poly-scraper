@@ -1,5 +1,5 @@
 import os
-from unicodedata import name
+import time
 
 import psycopg2
 
@@ -16,10 +16,19 @@ db_user = os.getenv("PGUSER", "postgres")
 db_pass = os.getenv("PGPASS", "postgres")
 db_name = os.getenv("PGDB", "postgres")
 db_port = os.getenv("PGPORT", "5432")
-def main():
 
+def  connect(user=db_user, password=db_pass, host=db_host, port=db_port, database=db_name):
+
+    try:
+        print("Waiting for PGSQL Connection")
+        return psycopg2.connect(user=db_user, password=db_pass, host=db_host, port=db_port, database=db_name)
+    except:
+        time.sleep(5)
+        connect()
+
+def main():
     bus.declare([product_queue])
-    conn = psycopg2.connect(user="postgres", password="postgres", host="127.0.0.1", port="5438", database="postgres")
+    conn = connect()
     cur = conn.cursor()
     def callback(ch, method, properties, product):
         products_to_insert = (
