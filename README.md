@@ -20,7 +20,12 @@ from the command line and see the data.
 psql -h localhost -p 5438 -d postgres -U postgres -W
 ```
 
-Provide `postgres` as password, when prompted.
+Provide `postgres` as password, when prompted. Then we can use standard SQL queries to
+see the available data.
+
+``` sql
+SELECT name, size, price, color, stock FROM product;
+```
 
 ## Assignment Details
 
