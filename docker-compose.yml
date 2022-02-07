@@ -39,3 +39,12 @@ services:
       - "rabbitmq:rabbitmq"
     environment:
       - RABBITHOST=rabbitmq
+  product_scraper:
+    build: ./product_scraper/
+    depends_on:
+    - rabbitmq
+    links:
+      - "rabbitmq:rabbitmq"
+    environment:
+      - RABBITHOST=rabbitmq
+    
