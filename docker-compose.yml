@@ -54,15 +54,18 @@ services:
       - ./bus:/src/bus
       - ./tasks.py:/src/tasks.py
       - ./products.py:/src/products.py
-  # product_aggregator:
-  #   build: ./product_aggregator/
-  #   depends_on:
-  #   - rabbitmq
-  #   - postgres
-  #   links:
-  #     - "rabbitmq:rabbitmq"
-  #     - "postgres:postgres"
-  #   environment:
-  #     - RABBITHOST=rabbitmq
-  #     - PGHOST=postgres
+  product_aggregator:
+    build: ./product_aggregator/
+    depends_on:
+    - rabbitmq
+    - postgres
+    links:
+      - "rabbitmq:rabbitmq"
+      - "postgres:postgres"
+    environment:
+      - RABBITHOST=rabbitmq
+      - PGHOST=postgres
+    volumes:
+      - ./bus:/src/bus
+      - ./products.py:/src/products.py
     
