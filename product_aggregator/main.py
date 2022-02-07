@@ -1,6 +1,9 @@
+import os
 from unicodedata import name
-import bus
+
 import psycopg2
+
+import bus
 
 product_queue = "products"
 
