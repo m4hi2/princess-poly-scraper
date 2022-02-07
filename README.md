@@ -1,5 +1,13 @@
 # Zelf Assignment
 
+## How to run?
+
+### With Docker
+
+`docker compose up -d --scale product_scraper=5`
+
+The above command will run all the micro services and necessary infrastructure automatically.
+
 ## Assignment Details
 
 ### Site to scrape
