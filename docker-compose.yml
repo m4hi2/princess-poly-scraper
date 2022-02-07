@@ -47,4 +47,15 @@ services:
       - "rabbitmq:rabbitmq"
     environment:
       - RABBITHOST=rabbitmq
+  product_aggregator:
+    build: ./product_aggregator/
+    depends_on:
+    - rabbitmq
+    - postgres
+    links:
+      - "rabbitmq:rabbitmq"
+      - "postgres:postgres"
+    environment:
+      - RABBITHOST=rabbitmq
+      - PGHOST=postgres
     
