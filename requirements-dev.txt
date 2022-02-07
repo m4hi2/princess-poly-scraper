@@ -1,0 +1,13 @@
+certifi==2021.10.8
+charset-normalizer==2.0.11
+greenlet==1.1.2
+idna==3.3
+pika==1.2.0
+playwright==1.18.1
+psycopg2==2.9.3
+pyee==9.0.3
+python-dotenv==0.19.2
+requests==2.27.1
+typing-extensions==4.0.1
+urllib3==1.26.8
+websockets==10.1
