@@ -1,10 +1,12 @@
 # Zelf Assignment
 
-## Site to scrape
+## Assignment Details
+
+### Site to scrape
 
 `https://us.princesspolly.com/`
 
-## Specification
+### Specification
 
 Example product link: `https://us.princesspolly.com/products/huxley-set?nosto=frontpage-nosto-3`
 
