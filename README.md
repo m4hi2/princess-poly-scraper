@@ -8,6 +8,18 @@
 
 The above command will run all the micro services and necessary infrastructure automatically.
 
+### How to see data
+
+Sorry, I didn't have the time to build a web service to view the data, I initially planned on
+building one. Currently, we can connect to the postgresql service running on the docker container
+from the command line and see the data.
+
+``` bash
+psql -h localhost -p 5438 -d postgres -U postgres -W
+```
+
+Provide `postgres` as password, when prompted.
+
 ## Assignment Details
 
 ### Site to scrape
