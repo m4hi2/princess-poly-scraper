@@ -39,23 +39,7 @@ services:
       - "rabbitmq:rabbitmq"
     environment:
       - RABBITHOST=rabbitmq
-  product_scraper:
-    build: ./product_scraper/
-    depends_on:
-    - rabbitmq
-    links:
-      - "rabbitmq:rabbitmq"
-    environment:
-      - RABBITHOST=rabbitmq
-  product_aggregator:
-    build: ./product_aggregator/
-    depends_on:
-    - rabbitmq
-    - postgres
-    links:
-      - "rabbitmq:rabbitmq"
-      - "postgres:postgres"
-    environment:
-      - RABBITHOST=rabbitmq
-      - PGHOST=postgres
+    volumes:
+      - ./bus:/src/bus
+      - ./tasks.py:/src/tasks.py
     
