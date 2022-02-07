@@ -11,6 +11,11 @@ product_insert_query = """INSERT INTO
                         product(name, price, full_price, size, color, image_links, stock, description)
                         VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"""
 
+db_host = os.getenv("PGHOST", "127.0.0.1")
+db_user = os.getenv("PGUSER", "postgres")
+db_pass = os.getenv("PGPASS", "postgres")
+db_name = os.getenv("PGDB", "postgres")
+db_port = os.getenv("PGPORT", "5432")
 def main():
 
     bus.declare([product_queue])
