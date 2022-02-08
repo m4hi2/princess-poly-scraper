@@ -46,9 +46,9 @@ The **Scraping System** consists of 3 micro services and 2 infrastructure progra
 
 The micro services are:
 
-1. [sitemap_scraper](#sitemapscraper)
-2. [product_scraper](#productscraper) (pictured with playwright logo in the diagram)
-3. [aggregator_service](#aggregatorservice)
+1. [sitemap_scraper](#sitemap_scraper)
+2. [product_scraper](#product_scraper) (pictured with playwright logo in the diagram)
+3. [aggregator_service](#aggregator_service)
 
 The infrastructure programs are:
 
@@ -68,7 +68,7 @@ This service is geared for traversing the target website's sitemap.xml and find 
 This module uses python `requests` and `re` libraries. After traversing the sitemap.xml,
 the service creates a UUID for each found product link and creates a
 Task object which is then *pickled* and sent to RabbitMQ `product_links` queue for further
-processing by the [product_scraper](#productscraper) service. After all the tasks are sent
+processing by the [product_scraper](#product_scraper) service. After all the tasks are sent
 to the queue the program exits and so does the *Docker Container*. This service is very
 **fast** and typically takes around 10s to do it's job and exit.
 
@@ -78,7 +78,7 @@ Product Scraper service consumes tasks from `product_links` RabbitMQ queue and s
 data as per the [specification](#specification) from the product page. It uses Playwright
 to control a headless Chromium browser instance and extract the required information.
 When the information collection is done, it creates a Product object which is then *pickled*
-and sent to RabbitMQ `product` queue for the [aggregator_service](#aggregatorservice) to
+and sent to RabbitMQ `product` queue for the [aggregator_service](#aggregator_service) to
 further process. The reasons that influenced choices made while writing the scraper
 can be found at [Site Research](#research-of-the-site) section.
 
