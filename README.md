@@ -1,5 +1,14 @@
 # Zelf Assignment
 
+## Index
+
+1. [How to run?](#how-to-run)
+2. [Project Architecture Overview](#project-architecture-overview)
+3. [Scope for improvement](#scope-for-improvement)
+4. [Suggestions](#suggestions)
+5. [Assignment Details](#assignment-details)
+6. [Site Research](#research-of-the-site)
+
 ## How to run?
 
 ### With Docker
