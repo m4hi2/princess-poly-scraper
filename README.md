@@ -1,7 +1,3 @@
-# Zelf Assignment
-
-Web Scraping System design/development project for interview at [Zelf](https://hellozelf.com/)
-
 ## Index
 
 1. [How to run?](#how-to-run)
